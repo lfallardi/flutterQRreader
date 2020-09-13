@@ -1,6 +1,7 @@
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_lector/src/pages/direcciones_page.dart';
-import 'package:qr_lector/src/pages/mapa_page.dart';
+import 'package:qr_reader/src/pages/direcciones_page.dart';
+import 'package:qr_reader/src/pages/mapa_page.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -68,7 +69,20 @@ class _HomePageState extends State<HomePage> {
 
   }
 
-  _scanQR() {
-    print('ESCANEO CODIGO QR');
+  _scanQR() async {
+    
+    dynamic futureString = '';
+
+    try {
+      futureString = await BarcodeScanner.scan();
+    }catch (e) {
+      futureString = e.toString();
+    }
+
+    if( futureString != null ) {
+      print('LEIMOS EL QR');
+      print('FutureString: ${futureString.rawContent}');
+    }
+
   }
 }
